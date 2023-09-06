@@ -1,29 +1,33 @@
 #include <stdio.h>
-#include <ctype.h>
-
-int main()
-{
-    char text[101] = {0}, tmp;
-    int dupe = 0;
+#include <string.h>
+ 
+int main() {
+    char text[101] = {0}, text2[101] = {0}, tmp;
+    short i, dupe = 0, counter = 0;
     scanf("%[^\n]", text);
-    do {   
-        for (int i = 0; text[i + 1] != '\0'; i++)
-        {
-            if (text[i] == text[i+1]) {
-                text[i] == 127;
-                text[i+1] == 127;
+    strcat(text, " ");
+    while (1) {   
+        dupe = 0;
+        counter = 0;
+        for (i = 0; text[i] != '\0'; i++){
+            if (text[i] != text[i+1]) {
+                text2[counter++] = text[i];
+                if (text[i+1] == '\0') {
+                    text2[counter++] = '\0';
+                    }
+                     
+            } else {
                 dupe = 1;
+                tmp = text[i];
+                for (int j = i + 1; tmp == text[j]; j++){
+                    if (text[j+1] == '\0') break;
+                    i++;
+                }
             }
         }
-        for (int i = 0; text[i + 1] != '\0'; i++)
-        {
-            if (text[i] == text[i+1]) {
-                text[i] == 127;
-                text[i+1] == 127;
-                dupe = 1;
-            }
-        }
-        printf("%s", text);
-    } while (dupe);
+        if (!dupe) break;
+        puts(text2);
+        strcpy(text, text2);
+    }
     return 0;
 }
