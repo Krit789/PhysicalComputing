@@ -14,8 +14,7 @@ int main() {
                 text2[counter++] = text[i];
                 if (text[i+1] == '\0') {
                     text2[counter++] = '\0';
-                    }
-                     
+                }     
             } else {
                 dupe = 1;
                 tmp = text[i];

@@ -1,8 +1,9 @@
 #include <stdio.h>
-int main()
+int arr[] = {1,2,3,4,5,6};
+main()
 {
-    char a;
-    scanf("%c", &a);
-    printf("%d", a);
-    return 0;
-}
+    int *ptr; 
+    ptr = arr;
+    ptr = ptr+3;
+    printf("%d",*ptr);
+} 
