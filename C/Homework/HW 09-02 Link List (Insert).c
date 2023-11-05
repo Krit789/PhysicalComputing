@@ -13,7 +13,7 @@ void llPush(struct LinkedList *head, int data)
     while (current->next != NULL){
         current = current->next;
     }
-    current->next = (struct LinkedList *)malloc(sizeof(struct LinkedList));
+    current->next = (struct LinkedList *) malloc(sizeof(struct LinkedList));
     current->next->data = data;
     current->next->next = NULL;
 }

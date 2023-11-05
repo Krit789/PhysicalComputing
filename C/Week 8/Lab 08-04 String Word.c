@@ -5,19 +5,19 @@
 
 int main()
 {   
-    int count = 0;
+    int count = 0, i;
     char text[150] = {0};
     scanf("%[^\n]", text);
     text[strlen(text)] = ' ';
     text[strlen(text)] = '\0';
-    for (int i = 0; text[i] != '\0'; i++) {
+    for (i = 0; text[i] != '\0'; i++) {
         if (text[i] == 32) {
             count++;
         }
     }
     printf("%d words\n----\n", count);
     count = 0;
-    for (int i = 0; text[i] != '\0'; i++) {
+    for (i = 0; text[i] != '\0'; i++) {
         if (text[i] == 32) {
             printf(" : %d\n", count);
             count = 0;
