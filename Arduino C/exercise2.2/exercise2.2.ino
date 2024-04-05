@@ -1,37 +1,35 @@
-// C++ code
-//
+byte num_array[10][7] = {{0, 1, 1, 1, 1, 1, 1},  // 0
+                         {0, 0, 0, 1, 0, 0, 1},  // 1
+                         {1, 0, 1, 1, 1, 1, 0},  // 2
+                         {1, 0, 1, 1, 0, 1, 1},  // 3
+                         {1, 1, 0, 1, 0, 0, 1},  // 4
+                         {1, 1, 1, 0, 0, 1, 1},  // 5
+                         {1, 1, 1, 0, 1, 1, 1},  // 6
+                         {0, 0, 1, 1, 0, 0, 1},  // 7
+                         {1, 1, 1, 1, 1, 1, 1},  // 8
+                         {1, 1, 1, 1, 0, 1, 1}}; // 9
 
-int starttime, endtime;
 void setup()
 {
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT);
+  pinMode(0, OUTPUT);  // g
+  pinMode(1, OUTPUT);  // f
+  pinMode(4, OUTPUT);  // a
+  pinMode(5, OUTPUT);  // b
+  pinMode(6, OUTPUT);  // e
+  pinMode(7, OUTPUT);  // d
+  pinMode(8, OUTPUT);  // c
+  pinMode(9, OUTPUT);  // dp
+  pinMode(12, OUTPUT); // 7-seg left
+  pinMode(13, OUTPUT); // 7-seg left
 }
 
 void loop()
 {
-  starttime = millis();
+  int starttime = millis(), endtime;
   endtime = starttime;
   while ((endtime - starttime) <= 1000)
   {
-    digitalWrite(12, HIGH);
-    sevenSegSix();
-    delay(1);
-    digitalWrite(12, LOW);
-
-    digitalWrite(13, HIGH);
-    sevenSegFive();
-    delay(1);
-    digitalWrite(13, LOW);
-
+    showTwoDigits(10);
     endtime = millis();
   }
 
@@ -39,16 +37,7 @@ void loop()
   endtime = starttime;
   while ((endtime - starttime) <= 1000)
   {
-    digitalWrite(12, HIGH);
-    sevenSegZero();
-    delay(1);
-    digitalWrite(12, LOW);
-
-    digitalWrite(13, HIGH);
-    sevenSegSeven();
-    delay(1);
-    digitalWrite(13, LOW);
-
+    showTwoDigits(29);
     endtime = millis();
   }
 
@@ -56,16 +45,7 @@ void loop()
   endtime = starttime;
   while ((endtime - starttime) <= 1000)
   {
-    digitalWrite(12, HIGH);
-    sevenSegZero();
-    delay(1);
-    digitalWrite(12, LOW);
-
-    digitalWrite(13, HIGH);
-    sevenSegZero();
-    delay(1);
-    digitalWrite(13, LOW);
-
+    showTwoDigits(86);
     endtime = millis();
   }
 
@@ -73,82 +53,44 @@ void loop()
   endtime = starttime;
   while ((endtime - starttime) <= 1000)
   {
-    digitalWrite(12, HIGH);
-    sevenSegFour();
-    delay(1);
-    digitalWrite(12, LOW);
-
-    digitalWrite(13, HIGH);
-    sevenSegSix();
-    delay(1);
-    digitalWrite(13, LOW);
-
+    showTwoDigits(90);
     endtime = millis();
   }
 }
 
-void sevenSegSix() {
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, LOW);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
+void showDigit(byte number)
+{
+  byte pin = 0;
+  for (byte j = 0; j < 7; j++)
+  {
+    digitalWrite(pin, num_array[number][j]);
+    pin++;
+    if (pin == 2)
+    {
+      pin += 2;
+    }
+  }
 }
 
-void sevenSegFive() {
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
-}
-
-void sevenSegFour() {
-  digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
-  digitalWrite(4, LOW);
-  digitalWrite(5, HIGH);
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
-}
-
-void sevenSegThree() {
-  digitalWrite(2, HIGH);
-  digitalWrite(3, LOW);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, HIGH);
-  digitalWrite(6, LOW);
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
-}
-
-void sevenSegZero() {
-  digitalWrite(2, LOW);
-  digitalWrite(3, HIGH);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, HIGH);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, HIGH);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
-}
-
-void sevenSegSeven() {
-  digitalWrite(2, LOW);
-  digitalWrite(3, LOW);
-  digitalWrite(4, HIGH);
-  digitalWrite(5, HIGH);
-  digitalWrite(6, LOW);
-  digitalWrite(7, LOW);
-  digitalWrite(8, HIGH);
-  digitalWrite(9, LOW);
+void showTwoDigits(byte number)
+{
+  byte digits[2] = {(number / 10) % 10, number % 10};  
+  digitalWrite(13, LOW);
+  digitalWrite(12, HIGH);
+  for (byte i = 0; i < 2; i++)
+  {
+    byte pin = 0;
+    for (byte j = 0; j < 7; j++)
+    {
+      digitalWrite(pin, num_array[digits[i]][j]);
+      pin++;
+      if (pin == 2)
+      {
+        pin += 2;
+      }
+    }
+    delay(1);
+    digitalWrite(12, LOW);
+    digitalWrite(13, HIGH);
+  }
 }
